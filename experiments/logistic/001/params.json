@@ -1,0 +1,6 @@
+{
+    "algorithm": "LinearRegression",
+    "fit_intercept": true,
+    "normalize": false,
+    "random_state": 42
+}
