@@ -14,3 +14,4 @@ def test_create_runs(tmp_path):
     exp.start_run(run_1)
     run_1_path = tmp_path / "test_exp" / run_1
     assert run_1_path.exists()
+
