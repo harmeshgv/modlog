@@ -1,29 +1,16 @@
-import os
-import json
 import pytest
-from ml_tracker.logger import Experiment
+from ml_tracker.experiment import EXPERIMENT
 
-@pytest.fixture
-def clean_dir(tmp_path):
-    """Fixture that gives a clean temporary directory for testing."""
-    return tmp_path
+def test_create_experiment(tmp_path):
+    """Test that an Experiment creates its directory correctly."""
+    exp = EXPERIMENT(name="test_exp", base_dir=str(tmp_path))
+    exp_path = tmp_path / "test_exp"  # Using Path object
+    assert exp_path.exists()
 
-def test_log_params_create_file(clean_dir):  # <-- accept fixture here
-    exp = Experiment(name="test_exp", base_dir=str(clean_dir))  # str() needed for path
+def test_create_runs(tmp_path):
+    exp = EXPERIMENT(name="test_exp", base_dir=str(tmp_path))
+    run_1 = "1"
 
-    run_id = "12345"
-    params = {"lr": 0.01, "epochs": 10}
-
-    result = exp.log_params(params, run_id)
-
-    # ✅ check method returned True
-    assert result is True
-
-    # ✅ check file exists
-    json_path = os.path.join(clean_dir, "test_exp", run_id, "params.json")
-    assert os.path.exists(json_path)
-
-    # ✅ check file content is correct
-    with open(json_path, "r") as f:
-        saved = json.load(f)
-    assert saved == params
+    exp.start_run(run_1)
+    run_1_path = tmp_path / "test_exp" / run_1
+    assert run_1_path.exists()
