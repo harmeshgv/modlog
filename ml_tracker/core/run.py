@@ -1,0 +1,106 @@
+import os
+from ml_tracker.utils import write_json, read_json
+
+
+class RUN:
+    def __init__(self, run_id, run_path):
+        self.run_path = run_path
+        self.run_id = run_id
+
+    def log_params(self, params: dict) -> bool:
+        """
+        Description :
+
+        Args:
+
+        Returns:
+
+        Raises:
+        """
+        if not isinstance(params, dict):
+            if hasattr(params, "get_params"):
+                params = params.get_params()
+            else:
+                raise ValueError("params must be a dict or have a get_params() method")
+
+        os.makedirs(self.run_path, exist_ok=True)
+        log_path = os.path.join(self.run_path, "log_params.json")
+        write_json(log_path, params)
+        return True
+
+    def dis_params(self) -> dict:
+        """
+        Description :
+
+        Args:
+
+        Returns:
+
+        Raises:
+        """
+        log_path = os.path.join(self.run_path, "log_params.json")
+        content = read_json(log_path)
+        return content
+
+    def log_metrics(self, metrics) -> bool:
+        """
+        Description :
+
+        Args:
+
+        Returns:
+
+        Raises:
+        """
+        if not isinstance(metrics, dict):
+            raise ValueError("metrics must be a dict")
+
+        os.makedirs(self.run_path, exist_ok=True)
+        metrics_path = os.path.join(self.run_path, "log_metrics.json")
+        try:
+            write_json(metrics_path, metrics)
+        except IOError as e:
+            raise RuntimeError(f"Failed to write log file at {metrics_path}") from e
+        return True
+
+    def dis_metrics(self) -> dict:
+        """
+        Description :
+
+        Args:
+
+        Returns:
+
+        Raises:
+        """
+        metrics_path = os.path.join(self.run_path, "log_metrics.json")
+        return read_json(metrics_path)
+
+    def log_data(self, data) -> bool:
+        """
+        Description :
+
+        Args:
+
+        Returns:
+
+        Raises:
+        """
+
+        os.makedirs(self.run_path, exist_ok=True)
+
+        data_path = os.path.join(self.run_path, "data.json")
+        return write_json(data_path, data)
+
+    def dis_data(self) -> dict:
+        """
+        Description :
+
+        Args:
+
+        Returns:
+
+        Raises:
+        """
+        data_path = os.path.join(self.run_path, "data.json")
+        return read_json(data_path)
