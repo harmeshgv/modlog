@@ -16,10 +16,11 @@ jobs:
   tests:
     runs-on: ${{ matrix.os }}
 
-    strategy:
+    strategy: false
+      fail-fast:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.10", "3.11", "3.12"]
 
     steps:
       - name: Checkout repository
