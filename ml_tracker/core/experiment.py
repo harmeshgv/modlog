@@ -1,6 +1,6 @@
 from datetime import datetime
 from pathlib import Path
-from ml_tracker.utils import write_json
+from ml_tracker.utils.io import write_json
 from ml_tracker.core.run import RUN
 import os
 

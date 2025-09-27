@@ -13,7 +13,7 @@ def test_log_and_dis_params(temp_run_dir):
     params = {"lr": 0.01, "epochs": 10}
     assert run.log_params(params) is True
 
-    loaded = run.dis_params()
+    loaded = run.get_params()
     assert params == loaded
 
 
@@ -28,7 +28,7 @@ def test_log_and_dis_metrics(temp_run_dir):
     metrics = {"accuracy_score": 0.9876534}
     assert run.log_metrics(metrics) is True
 
-    loaded = run.dis_metrics()
+    loaded = run.get_metrics()
     assert metrics == loaded
 
 

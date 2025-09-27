@@ -1,9 +1,10 @@
 import os
-from ml_tracker.utils import write_json, read_json
+from ml_tracker.utils.io import write_json, read_json
+from pathlib import Path
 
 
 class RUN:
-    def __init__(self, run_id, run_path):
+    def __init__(self, run_id: str, run_path: Path):
         self.run_path = run_path
         self.run_id = run_id
 
@@ -28,7 +29,7 @@ class RUN:
         write_json(log_path, params)
         return True
 
-    def dis_params(self) -> dict:
+    def get_params(self) -> dict:
         """
         Description :
 
@@ -39,10 +40,9 @@ class RUN:
         Raises:
         """
         log_path = os.path.join(self.run_path, "log_params.json")
-        content = read_json(log_path)
-        return content
+        return read_json(log_path)
 
-    def log_metrics(self, metrics) -> bool:
+    def log_metrics(self, metrics: dict) -> bool:
         """
         Description :
 
@@ -63,7 +63,7 @@ class RUN:
             raise RuntimeError(f"Failed to write log file at {metrics_path}") from e
         return True
 
-    def dis_metrics(self) -> dict:
+    def get_metrics(self) -> dict:
         """
         Description :
 
@@ -76,7 +76,7 @@ class RUN:
         metrics_path = os.path.join(self.run_path, "log_metrics.json")
         return read_json(metrics_path)
 
-    def log_data(self, data) -> bool:
+    def log_data_info(self, data: dict) -> bool:
         """
         Description :
 
@@ -92,7 +92,7 @@ class RUN:
         data_path = os.path.join(self.run_path, "data.json")
         return write_json(data_path, data)
 
-    def dis_data(self) -> dict:
+    def get_data_info(self) -> dict:
         """
         Description :
 
@@ -104,3 +104,9 @@ class RUN:
         """
         data_path = os.path.join(self.run_path, "data.json")
         return read_json(data_path)
+
+    def log_predictions(self, y_true, y_preds, task_type) -> dict:
+        if task_type.lower() == "regression":
+            return {}
+        elif task_type.lower() == "classification":
+            return {}

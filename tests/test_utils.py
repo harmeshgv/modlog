@@ -1,5 +1,5 @@
 import pytest
-from ml_tracker.utils import read_json, write_json
+from ml_tracker.utils.io import read_json, write_json
 
 
 @pytest.fixture
