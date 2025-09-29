@@ -13,13 +13,13 @@ class EXPERIMENT:
         self.exp_dir.mkdir(parents=True, exist_ok=True)
         self._runs = {}
 
-    def start_run(self, run_id: str | None = None) -> RUN:
+    def start_run(self, run_id: str | None = None, task_type: str | None = None) -> RUN:
         run_id = run_id or datetime.now().strftime("%Y%m%d_%H%M%S")
         if run_id in self._runs:
             raise ValueError(f"run {run_id} aready exists for this experiment")
 
         run_path = self.exp_dir / run_id
-        run = RUN(run_id, run_path)
+        run = RUN(run_id, run_path, task_type)
         self._runs[run_id] = run
         return run
 
